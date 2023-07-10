@@ -16,10 +16,9 @@ def setup_module(request):
     global driver
 
     url = os.environ.get("TODO_URL")
-    # url = None
 
     if url is None:
-        url = "0.0.0.0:3000/"
+        url = "http://localhost:3000/"
 
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     driver.implicitly_wait(10)

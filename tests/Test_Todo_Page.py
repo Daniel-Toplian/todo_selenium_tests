@@ -16,9 +16,10 @@ def setup_module(request):
     global driver
 
     url = os.environ.get("TODO_URL")
+    # url = None
 
     if url is None:
-        url = "https://localhost:3000/"
+        url = "0.0.0.0:3000/"
 
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     driver.implicitly_wait(10)
@@ -66,6 +67,14 @@ class Test_Todo_Page:
         self.todo_page.delete_todo(0)
         updated_todos_count = self.todo_page.todo_count()
         assert updated_todos_count == old_todos_count - 1
+
+    @pytest.mark.run(order=6)
+    def test_not_adding_empty_task(self):
+        old_todos_count = self.todo_page.todo_count()
+        self.todo_page.add_todo("")
+        updated_todos_count = self.todo_page.todo_count()
+
+        assert updated_todos_count == old_todos_count
 
     def toggle_todo(self, todo_index, class_name):
         self.todo_page.toggle_todo_status(todo_index)

@@ -45,7 +45,7 @@ def setup_module(request):
     yield todo_page
 
 
-def teardown_module(request):
+def teardown_module():
     driver.quit()
 
 
